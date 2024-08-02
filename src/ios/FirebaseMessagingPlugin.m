@@ -13,6 +13,17 @@
     if(![FIRApp defaultApp]) {
         [FIRApp configure];
     }
+
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+}
+
+- (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Pass device token to Firebase
+    [FIRMessaging messaging].APNSToken = deviceToken;
+}
+
+- (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed to register for remote notifications: %@", error);
 }
 
 - (void)requestPermission:(CDVInvokedUrlCommand *)command {
@@ -197,4 +208,11 @@
     }
 }
 
+- (void)checkNotificationStatus:(CDVInvokedUrlCommand *)command {
+    UNUserNotificationCenter* notifCenter = [UNUserNotificationCenter currentNotificationCenter];
+    [notifCenter getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int)settings.authorizationStatus];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
+}
 @end
