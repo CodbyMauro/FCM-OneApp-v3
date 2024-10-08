@@ -107,9 +107,6 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
         <hook type="after_prepare" src="src/scripts/addColor.js" />
 
-        <resource-file src="src/android/res/drawable-anydpi/fcm_notification_icon.xml"
-            target="res/drawable-anydpi/fcm_notification_icon.xml" />
-
         <resource-file src="src/android/res/drawable-hdpi/fcm_notification_icon.png"
             target="res/drawable-hdpi/fcm_notification_icon.png" />
 
