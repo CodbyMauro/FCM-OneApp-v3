@@ -21,36 +21,7 @@ ext.postBuildExtras = {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt' // Añadido para kapt
-apply plugin: 'com.google.gms.google-services' // Aplica el plugin directamente
 
-android {
-    compileSdkVersion 33
-    defaultConfig {
-        applicationId "com.example.app"
-        minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = '11'
-    }
-}
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0" // Asegurarse de usar la versión más reciente compatible
