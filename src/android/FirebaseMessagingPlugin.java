@@ -1,4 +1,3 @@
-
 package by.chemerisuk.cordova.firebase;
 
 import android.Manifest;
@@ -13,7 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.core.app.NotificationManagerCompat;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.app.ActivityCompat;
 
+import com.google.firebase.firebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -37,17 +40,17 @@ import static by.chemerisuk.cordova.support.ExecutionThread.WORKER;
 
 public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     private static final String TAG = "FCMPlugin";
-
+    private static FirebaseMessagingPlugin instance;
     private JSONObject lastBundle;
     private boolean isBackground = false;
     private boolean forceShow = false;
     private CallbackContext tokenRefreshCallback;
     private CallbackContext foregroundCallback;
     private CallbackContext backgroundCallback;
-    private static FirebaseMessagingPlugin instance;
     private NotificationManager notificationManager;
     private FirebaseMessaging firebaseMessaging;
     private CallbackContext requestPermissionCallback;
+    private ActivityResultLauncher<String> requestPermissionLauncher;
 
     @Override
     protected void pluginInitialize() {
