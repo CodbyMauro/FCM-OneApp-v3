@@ -21,7 +21,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     </js-module>
 
     <dependency id="cordova-outsystems-firebase-core"
-        url="https://github.com/OutSystems/cordova-outsystems-firebase-core.git#1.0.1" />
+        url="https://github.com/OutSystems/cordova-outsystems-firebase-core.git#2.0.0" />
 
     <platform name="ios">
         <preference name="IOS_FIREBASE_POD_VERSION" default="~> 10.29.0" />
