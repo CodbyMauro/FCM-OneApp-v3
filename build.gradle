@@ -5,8 +5,9 @@ buildscript {
     }
 
     dependencies {
+        // Actualizado a versiones más recientes
         classpath 'com.android.tools.build:gradle:8.1.0'
-        classpath 'com.google.gms:google-services:4.3.14'
+        classpath 'com.google.gms:google-services:4.3.15'
     }
 }
 
@@ -15,4 +16,63 @@ ext.postBuildExtras = {
         apply plugin: com.google.gms.googleservices.GoogleServicesPlugin
         googleServices.disableVersionCheck = true
     }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt' // Añadido para kapt
+apply plugin: 'com.google.gms.google-services' // Aplica el plugin directamente
+
+android {
+    compileSdkVersion 33
+    defaultConfig {
+        applicationId "com.example.app"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0" // Asegurarse de usar la versión más reciente compatible
+
+    // Room - Actualizado a la versión más reciente de androidx
+    implementation 'androidx.room:room-runtime:2.5.0'
+    kapt 'androidx.room:room-compiler:2.5.0' // Cambiado de annotationProcessor a kapt
+
+    // Dependencias de Firebase y Google Play
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging'
+
+    // Otras dependencias
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+kapt {
+    correctErrorTypes = true
 }
