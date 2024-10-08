@@ -93,7 +93,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                 android:resource="@drawable/fcm_notification_icon" />
         </config-file>
 
-        <dependency id="cordova-support-android-plugin" version="~2.0.4" />
+        <dependency id="cordova-support-android-plugin" version="~1.0.0" />
 
         <framework src="platform('com.google.firebase:firebase-bom:$ANDROID_FIREBASE_BOM_VERSION')" />
         <framework src="com.google.firebase:firebase-messaging" />
