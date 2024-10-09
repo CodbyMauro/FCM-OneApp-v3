@@ -120,9 +120,11 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     private void onMessage(CallbackContext callbackContext) {
         instance.foregroundCallback = callbackContext;
     
-        // Asegurarse de enviar los datos correctos cuando la app está en foreground
         if (lastBundle != null) {
-            sendNotification(lastBundle, callbackContext);
+            // Solo enviar la notificación si la app está en segundo plano
+            if (instance.isBackground) {
+                sendNotification(lastBundle, callbackContext);
+            }
             lastBundle = null;
         }
     }
