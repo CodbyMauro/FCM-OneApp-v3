@@ -5,7 +5,6 @@ import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.app.PendingIntent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -92,27 +91,18 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
 
     private void showAlert(RemoteMessage.Notification notification) {
 
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getNotificationChannel(notification))
                 .setSound(getNotificationSound(notification.getSound()))
                 .setContentTitle(notification.getTitle())
                 .setContentText(notification.getBody())
                 .setAutoCancel(true) 
                 .setGroup(notification.getTag())
-                .setContentIntent(pendingIntent)
                 .setSmallIcon(defaultNotificationIcon)
                 .setColor(defaultNotificationColor)
                 // must set priority to make sure forceShow works properly
                 .setPriority(1);
 
         notificationManager.notify(0, builder.build());
-        // dismiss notification to hide icon from status bar automatically
-        new Handler(getMainLooper()).postDelayed(() -> {
-            notificationManager.cancel(0);
-        }, 3000);
     }
 
     private String getNotificationChannel(RemoteMessage.Notification notification) {
