@@ -5,6 +5,7 @@ import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.app.PendingIntent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
