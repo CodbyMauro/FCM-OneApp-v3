@@ -157,11 +157,6 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
         callbackContext.success();
     }
 
-
-     * cordova.plugins.firebase.messaging.getToken().then(function(token) {
-     *     console.log("Got device token: ", token);
-     * });
-     */
     @CordovaMethod
     private void getToken(CordovaArgs args, CallbackContext callbackContext) throws Exception {
         String type = args.getString(0);
