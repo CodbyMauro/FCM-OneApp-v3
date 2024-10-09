@@ -93,11 +93,16 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
     }
 
     private void showAlert(RemoteMessage.Notification notification) {
-
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
+        
+        PendingIntent pendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
+    
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getNotificationChannel(notification))
                 .setSound(getNotificationSound(notification.getSound()))
                 .setContentTitle(notification.getTitle())
@@ -108,13 +113,13 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(defaultNotificationIcon)
                 .setColor(defaultNotificationColor);
-
+    
         notificationManager.notify(0, builder.build());
+    
         new Handler(getMainLooper()).postDelayed(() -> {
             notificationManager.cancel(0);
         }, 3000);
-
-    }
+}
 
     private String getNotificationChannel(RemoteMessage.Notification notification) {
         String channel = notification.getChannelId();
