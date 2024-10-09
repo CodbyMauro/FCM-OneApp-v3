@@ -2,7 +2,6 @@ package by.chemerisuk.cordova.firebase;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 import static com.google.android.gms.tasks.Tasks.await;
-import static by.chemerisuk.cordova.support.ExecutionThread.WORKER;
 
 import android.Manifest;
 import android.app.NotificationManager;
@@ -132,14 +131,14 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
                         });
     }
 
-    @CordovaMethod(WORKER)
+    @CordovaMethod
     private void subscribe(CordovaArgs args, final CallbackContext callbackContext) throws Exception {
         String topic = args.getString(0);
         await(firebaseMessaging.subscribeToTopic(topic));
         callbackContext.success();
     }
 
-    @CordovaMethod(WORKER)
+    @CordovaMethod
     private void unsubscribe(CordovaArgs args, CallbackContext callbackContext) throws Exception {
         String topic = args.getString(0);
         await(firebaseMessaging.unsubscribeFromTopic(topic));
@@ -152,13 +151,18 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
         callbackContext.success();
     }
 
-    @CordovaMethod(WORKER)
+    @CordovaMethod
     private void deleteToken(CallbackContext callbackContext) throws Exception {
         await(firebaseMessaging.deleteToken());
         callbackContext.success();
     }
 
-    @CordovaMethod(WORKER)
+
+     * cordova.plugins.firebase.messaging.getToken().then(function(token) {
+     *     console.log("Got device token: ", token);
+     * });
+     */
+    @CordovaMethod
     private void getToken(CordovaArgs args, CallbackContext callbackContext) throws Exception {
         String type = args.getString(0);
         if (!type.isEmpty()) {
@@ -239,14 +243,14 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
         }
     }
 
-    @CordovaMethod(WORKER)
+    @CordovaMethod
     private void areNotificationsEnabled(CallbackContext callbackContext) {
         Context context = cordova.getActivity().getApplicationContext();
         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,
                 NotificationManagerCompat.from(context).areNotificationsEnabled() ? 1 : 0));
     }
 
-    @CordovaMethod(WORKER)
+    @CordovaMethod
     private void shouldShowRequestPermissionRationale(CallbackContext callbackContext) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,
