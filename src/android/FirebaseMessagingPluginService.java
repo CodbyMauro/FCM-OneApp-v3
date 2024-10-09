@@ -1,9 +1,5 @@
 package by.chemerisuk.cordova.firebase;
 
-
-import com.toyotaoneapp.nonproduction.HomeActivity;  // Ajusta el paquete correctamente
-
-
 import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 
 import android.app.NotificationChannel;
@@ -106,6 +102,7 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
                 .setContentText(notification.getBody())
                 .setAutoCancel(true) 
                 .setGroup(notification.getTag())
+                .setContentIntent(pendingIntent)
                 .setSmallIcon(defaultNotificationIcon)
                 .setColor(defaultNotificationColor)
                 // must set priority to make sure forceShow works properly
