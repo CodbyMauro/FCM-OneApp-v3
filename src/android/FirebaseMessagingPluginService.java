@@ -92,17 +92,24 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
     private void showAlert(RemoteMessage.Notification notification) {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getNotificationChannel(notification))
-                .setSound(getNotificationSound(notification.getSound()))
-                .setContentTitle(notification.getTitle())
-                .setContentText(notification.getBody())
-                .setAutoCancel(true) 
-                .setGroup(notification.getTag())
-                .setSmallIcon(defaultNotificationIcon)
-                .setColor(defaultNotificationColor)
-                // must set priority to make sure forceShow works properly
-                .setPriority(1);
+            .setSound(getNotificationSound(notification.getSound()))
+            .setContentTitle(notification.getTitle())
+            .setContentText(notification.getBody())
+            .setAutoCancel(true)
+            .setGroup(notification.getTag())
+            .setSmallIcon(defaultNotificationIcon)
+            .setColor(defaultNotificationColor)
+            .setPriority(NotificationCompat.PRIORITY_HIGH) // O PRIORITY_MAX para aún más importancia
+            .setDefaults(NotificationCompat.DEFAULT_ALL)  // Usa sonido, vibración, y luces predeterminados
+            .setVibrate(new long[]{0, 500, 1000})         // Patrón de vibración
+            .setOngoing(true)                             // Notificación que no puede ser descartada
+            .setFullScreenIntent(fullScreenIntent, true)  // Abre una actividad de pantalla completa si es necesario
 
         notificationManager.notify(0, builder.build());
+        new Handler(getMainLooper()).postDelayed(() -> {
+            notificationManager.cancel(0);
+        }, 3000);
+
     }
 
     private String getNotificationChannel(RemoteMessage.Notification notification) {
