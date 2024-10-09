@@ -115,11 +115,8 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
                 .setColor(defaultNotificationColor);
     
         notificationManager.notify(0, builder.build());
-    
-        new Handler(getMainLooper()).postDelayed(() -> {
-            notificationManager.cancel(0);
-        }, 3000);
-}
+
+    }
 
     private String getNotificationChannel(RemoteMessage.Notification notification) {
         String channel = notification.getChannelId();
