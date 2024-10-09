@@ -1,5 +1,7 @@
 package by.chemerisuk.cordova.firebase;
 
+import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -19,8 +21,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 
 
 public class FirebaseMessagingPluginService extends FirebaseMessagingService {
@@ -51,7 +51,7 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
             defaultNotificationColor = ContextCompat.getColor(this, ai.metaData.getInt(NOTIFICATION_COLOR_KEY));
         } catch (PackageManager.NameNotFoundException e) {
             Log.d(TAG, "Failed to load meta-data", e);
-        } catch(Resources.NotFoundException e) {
+        } catch (Resources.NotFoundException e) {
             Log.d(TAG, "Failed to load notification color", e);
         }
         // On Android O or greater we need to create a new notification channel
