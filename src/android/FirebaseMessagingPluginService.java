@@ -90,11 +90,18 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
     }
 
     private void showAlert(RemoteMessage.Notification notification) {
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getNotificationChannel(notification))
                 .setSound(getNotificationSound(notification.getSound()))
                 .setContentTitle(notification.getTitle())
                 .setContentText(notification.getBody())
+                .setAutoCancel(true) 
                 .setGroup(notification.getTag())
+                .setContentIntent(pendingIntent)
                 .setSmallIcon(defaultNotificationIcon)
                 .setColor(defaultNotificationColor)
                 // must set priority to make sure forceShow works properly
