@@ -102,6 +102,8 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
         } else {
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         }
+
+        int notificationId = (int) System.currentTimeMillis(); // Genera un ID único
     
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getNotificationChannel(notification))
                 .setSound(getNotificationSound(notification.getSound()))
@@ -113,8 +115,8 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(defaultNotificationIcon)
                 .setColor(defaultNotificationColor);
-    
-        notificationManager.notify(0, builder.build());
+        
+        notificationManager.notify(notificationId, builder.build());
 
     }
 
