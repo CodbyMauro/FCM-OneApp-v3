@@ -22,6 +22,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import com.toyotaoneapp.nonproduction.MainActivity;
+
 
 public class FirebaseMessagingPluginService extends FirebaseMessagingService {
     private static final String TAG = "FCMPluginService";
@@ -91,19 +93,20 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
 
     private void showAlert(RemoteMessage.Notification notification) {
 
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getNotificationChannel(notification))
-            .setSound(getNotificationSound(notification.getSound()))
-            .setContentTitle(notification.getTitle())
-            .setContentText(notification.getBody())
-            .setAutoCancel(true)
-            .setGroup(notification.getTag())
-            .setSmallIcon(defaultNotificationIcon)
-            .setColor(defaultNotificationColor)
-            .setPriority(NotificationCompat.PRIORITY_HIGH) // O PRIORITY_MAX para aún más importancia
-            .setDefaults(NotificationCompat.DEFAULT_ALL)  // Usa sonido, vibración, y luces predeterminados
-            .setVibrate(new long[]{0, 500, 1000})         // Patrón de vibración
-            .setOngoing(true)                             // Notificación que no puede ser descartada
-            .setFullScreenIntent(fullScreenIntent, true)  // Abre una actividad de pantalla completa si es necesario
+                .setSound(getNotificationSound(notification.getSound()))
+                .setContentTitle(notification.getTitle())
+                .setContentText(notification.getBody())
+                .setAutoCancel(true) 
+                .setGroup(notification.getTag())
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setSmallIcon(defaultNotificationIcon)
+                .setColor(defaultNotificationColor);
 
         notificationManager.notify(0, builder.build());
         new Handler(getMainLooper()).postDelayed(() -> {
