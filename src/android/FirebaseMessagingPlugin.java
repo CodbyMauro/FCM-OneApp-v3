@@ -113,7 +113,13 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
 
     @CordovaMethod
     private void onBackgroundMessage(CallbackContext callbackContext) {
+        
         instance.backgroundCallback = callbackContext;
+
+        if (lastBundle != null) {
+            sendNotification(lastBundle, callbackContext);
+            lastBundle = null;
+        }
     }
     
     @CordovaMethod
