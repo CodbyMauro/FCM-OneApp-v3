@@ -44,7 +44,7 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     private static FirebaseMessagingPlugin instance;
     private JSONObject lastBundle;
     private boolean isBackground = false;
-    private boolean forceShow = true;
+    private boolean forceShow = false;
     private CallbackContext backgroundCallback;
     private CallbackContext foregroundCallback;
     private CallbackContext requestPermissionCallback;
