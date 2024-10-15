@@ -132,8 +132,7 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     public void onNewIntent(Intent intent) {
         JSONObject notificationData = getNotificationData(intent);
         if (instance != null && notificationData != null) {
-            CallbackContext callbackContext = instance.isBackground ? instance.backgroundCallback : instance.foregroundCallback;
-            sendNotification(notificationData, callbackContext);
+            sendNotification(notificationData, instance.backgroundCallback);
         }
     }
 
